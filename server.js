@@ -24,11 +24,12 @@ app.get("/",(req, res) => {
 app.get("/notes",(req, res) => {
     res.sendFile (path.join(__dirname, "./public/notes.html"))
 })
+
+
 app.get("/api/notes", (req, res) => {
     getNotes().then (response => res.json (response))
-})
 
-app.post("/api/notes", (req,res) => {
+    app.post("/api/notes", (req,res) => {
     const text = req.body.text 
     const title = req.body.title
 
@@ -47,7 +48,10 @@ app.post("/api/notes", (req,res) => {
             fs.writeFile ("./db/db.json", JSON.stringify(parsedData), (err) =>
             err ? console.error(err) : console.info(`\nData written to ${"./db.json"}`)
           );
-          }})}})
+            console.log(JSON.stringify(parsedData));
+          res.sendFile(path.join(__dirname, './public/notes.html'));
+}})}})})
+
 
 
 app.listen (PORT, () => {
